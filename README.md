@@ -2,7 +2,7 @@
 
 UrbanAgent is a privacy-clean public overview of a city-scale remote-sensing task agent. It is designed as an orchestration layer for urban analysis workflows: routing a request, planning the work, retrieving supporting evidence, calling spatial and external tools, synthesizing results, verifying risk, and routing high-risk outputs through review.
 
-This public repository currently publishes a sanitized project introduction only. Source code, raw documents, generated datasets, logs, memory artifacts, local runtime files, credentials, and environment-specific configuration are intentionally excluded.
+This public repository publishes a sanitized project introduction and a compact public source snapshot. Raw documents, generated datasets, logs, memory artifacts, local runtime files, credentials, and environment-specific configuration are intentionally excluded.
 
 ## What It Does
 
@@ -56,13 +56,30 @@ memory -> rewrite -> context management -> route and plan -> retrieve
 
 ## Technology Stack
 
-- Python 3.10+
+- Python 3.9+ for the public source snapshot
 - FastAPI for service interfaces
 - Pydantic for request and response contracts
 - LangChain-compatible tools for retrieval and tool abstraction
 - LangGraph-style workflow orchestration
 - HTTP adapters for external services
 - Pytest-based unit, integration, and end-to-end validation
+
+## Source Snapshot
+
+The `urban_agent/` package is a sanitized, dependency-light subset of the private prototype. It keeps the core ideas visible without exposing private service wiring:
+
+- `router.py`: deterministic route selection for QA, spatial, GIS, data-operation, and comprehensive tasks.
+- `planner.py`: hierarchical plan generation with goals, subgoals, and executable steps.
+- `synthesis.py`: evidence and tool-output normalization into a stable response shape.
+- `verifier.py`: grounding, missing-input, review, cannot-solve, and clarification checks.
+- `spatial.py`: public-safe point and bounding-box spatial helpers.
+- `workflow.py`: a compact route-plan-retrieve-synthesize-verify orchestration loop.
+
+Run the public snapshot tests with:
+
+```bash
+python -m pytest -q
+```
 
 ## Public Release Scope
 
@@ -76,8 +93,8 @@ The following items were deliberately removed from the public material:
 - API credentials, model credentials, service URLs, and environment-specific settings
 - Internal reports that include operational details not needed for public understanding
 
-This README keeps only the project purpose, architecture, important capabilities, and public-safe implementation summary.
+The included source keeps only public-safe orchestration logic and minimal tests.
 
 ## Current Status
 
-UrbanAgent has reached a runnable engineering prototype stage in the private workspace. The public repository is intentionally limited to a sanitized README until the implementation package, examples, and datasets can be reviewed separately for open-source release.
+UrbanAgent has reached a runnable engineering prototype stage in the private workspace. The public repository now includes a sanitized source snapshot; full implementation packages, examples, and datasets remain excluded until each part is reviewed separately for open-source release.
