@@ -7,8 +7,8 @@ This public repository publishes a sanitized project introduction and a compact 
 ## What It Does
 
 - Supports evidence-grounded urban and remote-sensing question answering.
-- Routes tasks across short answer flows, spatial analysis flows, GIS-oriented tasks, and broader multi-step analysis.
-- Uses a graph-based workflow to keep routing, retrieval, tool execution, verification, review, and writeback explicit.
+- Routes tasks across short answer flows, spatial analysis flows, **GIS-oriented tasks**, and broader multi-step analysis.
+- Uses a **graph-based workflow** to keep routing, retrieval, tool execution, verification, review, and writeback explicit.
 - Connects retrieval, spatial actions, local tools, MCP-style tools, and skill-style extensions behind consistent tool contracts.
 - Produces structured outputs such as summaries, key findings, citations, object references, map payloads, follow-up actions, and review state.
 - Handles cannot-solve and needs-clarification cases as first-class response types instead of forcing low-confidence answers.
@@ -19,11 +19,11 @@ This public repository publishes a sanitized project introduction and a compact 
 
 UrbanAgent is organized around five main layers:
 
-- Interface layer: API endpoints and a lightweight workbench for query, task, review, upload, metrics, and spatial interactions.
-- Orchestration layer: a LangGraph-style state graph that controls node order, conditional branches, retry handling, asynchronous tasks, and streamable task events.
-- Decision layer: intent routing, workflow selection, hierarchical planning, evidence synthesis, solvability checks, and guardrail verification.
-- Tool layer: retrieval adapters, spatial action adapters, local tool governance, MCP-style execution, skill routing, and tool-worker result summarization.
-- Governance layer: session state, context management, review access control, audit trails, memory write decisions, observability, and evaluation.
+- **Interface layer**: API endpoints and a lightweight workbench for query, task, review, upload, metrics, and spatial interactions.
+- **Orchestration layer**: a LangGraph-style state graph that controls node order, conditional branches, retry handling, asynchronous tasks, and streamable task events.
+- **Decision layer**: intent routing, workflow selection, hierarchical planning, evidence synthesis, solvability checks, and guardrail verification.
+- **Tool layer**: retrieval adapters, spatial action adapters, local tool governance, MCP-style execution, skill routing, and tool-worker result summarization.
+- **Governance layer**: session state, context management, review access control, audit trails, memory write decisions, observability, and evaluation.
 
 The core workflow can be summarized as:
 
@@ -35,15 +35,15 @@ memory -> rewrite -> context management -> route and plan -> retrieve
 
 ## Key Components
 
-- Router and workflow selector: classify task intent and choose short or agentic execution.
-- Hierarchical planner: decomposes requests into goals, subgoals, and executable steps while keeping compatibility with flat step plans.
-- RAG adapter: treats retrieval, evidence lookup, validation, and memory access as tool capabilities rather than rebuilding a retrieval system inside the agent.
-- Spatial action service: supports region filtering, distance-based search, temporal layer comparison, and map-ready payload generation through pluggable GIS backends.
-- Tool execution layer: isolates external tool calls, normalizes errors, summarizes large outputs, and prevents tool results from polluting the main reasoning context.
-- Verifier: checks citation grounding, spatial risk, solvability, missing inputs, and whether a result should be answered, clarified, blocked, or reviewed.
-- Human review loop: supports pending review, approval, rejection, edits, permission checks, and auditable decisions.
-- Context governance: manages compact task context, rollover behavior for long sessions, and clean memory write policies.
-- Evaluation layer: supports scenario datasets, experiment matrices, workflow metrics, and open-source style benchmark construction.
+- **Router and workflow selector**: classify task intent and choose short or agentic execution.
+- **Hierarchical planner**: decomposes requests into goals, subgoals, and executable steps while keeping compatibility with flat step plans.
+- **RAG adapter**: treats retrieval, evidence lookup, validation, and memory access as tool capabilities rather than rebuilding a retrieval system inside the agent.
+- **Spatial action service**: supports region filtering, distance-based search, temporal layer comparison, and map-ready payload generation through pluggable GIS backends.
+- **Tool execution layer**: isolates external tool calls, normalizes errors, summarizes large outputs, and prevents tool results from polluting the main reasoning context.
+- **Verifier**: checks citation grounding, spatial risk, solvability, missing inputs, and whether a result should be answered, clarified, blocked, or reviewed.
+- **Human review loop**: supports pending review, approval, rejection, edits, permission checks, and auditable decisions.
+- **Context governance**: manages compact task context, rollover behavior for long sessions, and clean memory write policies.
+- **Evaluation layer**: supports scenario datasets, experiment matrices, workflow metrics, and open-source style benchmark construction.
 
 ## Typical Use Cases
 
