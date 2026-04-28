@@ -6,7 +6,7 @@ from urban_agent.schemas import EvidenceItem, SynthesisResult
 
 
 class EvidenceSynthesizer:
-    """Turns evidence and tool outputs into a stable response shape."""
+    """Normalizes evidence and tool outputs into the public response shape."""
 
     def synthesize(
         self,

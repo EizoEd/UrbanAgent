@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+from urban_agent.governance.review import ReviewPolicy
 from urban_agent.schemas import EvidenceItem, RouteDecision, SynthesisResult, VerificationResult
 
 
 class Verifier:
-    """Checks whether a synthesized result is grounded and safe to answer."""
+    """Checks grounding, missing inputs, solvability, and review requirements."""
+
+    def __init__(self, review_policy: ReviewPolicy | None = None) -> None:
+        self.review_policy = review_policy or ReviewPolicy()
 
     def verify(
         self,
@@ -26,38 +30,23 @@ class Verifier:
             missing_inputs.append("spatial result")
             suggested_actions.append("Provide region, distance, or layer metadata.")
 
-        if route.requires_review:
+        review_required = self.review_policy.requires_review(route=route, synthesis=synthesis)
+        if review_required:
             reason_codes.append("review_required")
             suggested_actions.append("Route this result to a human reviewer before final use.")
 
         if "no_evidence" in reason_codes:
-            return VerificationResult(
-                passed=False,
-                response_type="cannot_solve",
-                risk_level="medium",
-                reason_codes=reason_codes,
-                missing_inputs=missing_inputs,
-                suggested_actions=suggested_actions,
-                requires_review=False,
-            )
+            return VerificationResult(False, "cannot_solve", "medium", reason_codes, missing_inputs, suggested_actions)
 
         if "missing_spatial_payload" in reason_codes:
-            return VerificationResult(
-                passed=False,
-                response_type="needs_clarification",
-                risk_level="medium",
-                reason_codes=reason_codes,
-                missing_inputs=missing_inputs,
-                suggested_actions=suggested_actions,
-                requires_review=False,
-            )
+            return VerificationResult(False, "needs_clarification", "medium", reason_codes, missing_inputs, suggested_actions)
 
         return VerificationResult(
-            passed=not route.requires_review,
+            passed=not review_required,
             response_type="answer",
-            risk_level="high" if route.requires_review else "low",
+            risk_level="high" if review_required else "low",
             reason_codes=reason_codes,
             missing_inputs=missing_inputs,
             suggested_actions=suggested_actions,
-            requires_review=route.requires_review,
+            requires_review=review_required,
         )

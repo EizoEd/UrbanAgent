@@ -25,12 +25,7 @@ _HIGH_RISK_TERMS = {"approve", "compliance", "guarantee", "legal", "liability", 
 
 
 class IntentRouter:
-    """Rule-based public router.
-
-    The private project can replace this with model-assisted routing. This
-    public snapshot keeps deterministic logic so the code is safe to run
-    without credentials or external services.
-    """
+    """Public-safe deterministic router for urban analysis requests."""
 
     def route(self, query: str, metadata: Optional[dict[str, Any]] = None, mode: str = "auto") -> RouteDecision:
         meta = metadata or {}

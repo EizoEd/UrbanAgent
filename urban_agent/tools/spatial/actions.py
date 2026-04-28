@@ -1,28 +1,17 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from math import asin, cos, radians, sin, sqrt
 from typing import Any
 
-
-@dataclass
-class Feature:
-    feature_id: str
-    lon: float
-    lat: float
-    properties: dict[str, Any] = field(default_factory=dict)
+from urban_agent.tools.spatial.models import Feature
 
 
 class SpatialActionService:
-    """Small public-safe spatial adapter using point features only."""
+    """Public-safe spatial adapter using point features only."""
 
     def query_by_bbox(self, features: list[Feature], bbox: tuple[float, float, float, float]) -> dict[str, Any]:
         min_lon, min_lat, max_lon, max_lat = bbox
-        selected = [
-            item
-            for item in features
-            if min_lon <= item.lon <= max_lon and min_lat <= item.lat <= max_lat
-        ]
+        selected = [item for item in features if min_lon <= item.lon <= max_lon and min_lat <= item.lat <= max_lat]
         return _feature_collection("bbox_query", selected)
 
     def query_by_distance(
@@ -33,9 +22,7 @@ class SpatialActionService:
     ) -> dict[str, Any]:
         center_lon, center_lat = center
         selected = [
-            item
-            for item in features
-            if _haversine_km(center_lon, center_lat, item.lon, item.lat) <= distance_km
+            item for item in features if _haversine_km(center_lon, center_lat, item.lon, item.lat) <= distance_km
         ]
         return _feature_collection("distance_query", selected)
 
