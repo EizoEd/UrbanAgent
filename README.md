@@ -66,14 +66,29 @@ memory -> rewrite -> context management -> route and plan -> retrieve
 
 ## Source Snapshot
 
-The `urban_agent/` package is a sanitized, dependency-light subset of the private prototype. It keeps the core ideas visible without exposing private service wiring:
+The `urban_agent/` package is a sanitized, dependency-light subset of the private prototype. The public tree is organized to preserve the original module boundaries without exposing private service wiring:
 
-- `router.py`: deterministic route selection for QA, spatial, GIS, data-operation, and comprehensive tasks.
-- `planner.py`: hierarchical plan generation with goals, subgoals, and executable steps.
-- `synthesis.py`: evidence and tool-output normalization into a stable response shape.
-- `verifier.py`: grounding, missing-input, review, cannot-solve, and clarification checks.
-- `spatial.py`: public-safe point and bounding-box spatial helpers.
-- `workflow.py`: a compact route-plan-retrieve-synthesize-verify orchestration loop.
+```text
+urban_agent/
+  core.py
+  schemas/
+  agent/
+  tools/
+    spatial/
+  governance/
+  evaluation/
+docs/
+examples/
+tests/
+```
+
+- `schemas/`: request, planning, evidence, synthesis, verification, and workflow contracts.
+- `agent/`: deterministic routing, hierarchical planning, evidence synthesis, and verification.
+- `tools/`: in-memory retrieval and public-safe spatial adapters.
+- `governance/`: review and memory-write policies.
+- `evaluation/`: public smoke-test scenario definitions.
+- `docs/`: architecture, workflow, and release-scope notes.
+- `examples/`: basic and spatial workflow examples using synthetic public data.
 
 Run the public snapshot tests with:
 
